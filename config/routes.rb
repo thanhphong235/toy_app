@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   # root "posts#index"
   # root 'users#index'
   # root 'application#hello'
-  root 'static_pages#home'
-  get '/help', to: 'static_pages#help'
-  get '/about', to: 'static_pages#about'
+  # root 'static_pages#home'
+  # get '/help', to: 'static_pages#help'
+  # get '/about', to: 'static_pages#about'
+root 'static_pages#home'
+get '/help', to: 'static_pages#help'
+get '/about', to: 'static_pages#about'
+get '/contact', to: 'static_pages#contact'
 end
