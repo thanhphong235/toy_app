@@ -6,6 +6,7 @@ ruby "3.2.2"
 gem "rails", "~> 7.1.5", ">= 7.1.5.2"
 
 # Front-end & Assets
+gem 'bcrypt', "3.1.13"
 gem "bootstrap-sass", "3.4.1"
 gem "sassc", "~> 2.4"               # cần cho bootstrap-sass
 gem "autoprefixer-rails"            # cần để compile CSS mượt hơn
@@ -42,4 +43,5 @@ end
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
+  gem "rails-controller-testing"
 end

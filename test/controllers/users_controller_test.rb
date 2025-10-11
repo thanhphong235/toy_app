@@ -10,18 +10,30 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-test "should get new" do
-get signup_path
-assert_response :success
+  test "should get new" do
+    get signup_path
+    assert_response :success
+  end
+
+test "should create user" do
+  assert_difference("User.count", 1) do
+    post users_url, params: { user: { 
+      name: "New User #{SecureRandom.hex(3)}", 
+      email: "newuser#{SecureRandom.hex(3)}@example.com",
+      password: "password",
+      password_confirmation: "password"
+    } }
+  end
+
+  assert_redirected_to user_url(User.last)
+end
+test "should update user" do
+  patch user_url(@user), params: { user: { 
+    name: "Updated Name", 
+    email: "updated_#{SecureRandom.hex(6)}@example.com"
+  } }
 end
 
-  test "should create user" do
-    assert_difference("User.count") do
-      post users_url, params: { user: { email: @user.email, name: @user.name } }
-    end
-
-    assert_redirected_to user_url(User.last)
-  end
 
   test "should show user" do
     get user_url(@user)
@@ -33,16 +45,10 @@ end
     assert_response :success
   end
 
-  test "should update user" do
-    patch user_url(@user), params: { user: { email: @user.email, name: @user.name } }
-    assert_redirected_to user_url(@user)
-  end
-
   test "should destroy user" do
     assert_difference("User.count", -1) do
       delete user_url(@user)
     end
-
     assert_redirected_to users_url
   end
 end
