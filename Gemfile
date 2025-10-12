@@ -8,14 +8,20 @@ gem "rails", "~> 7.1.5", ">= 7.1.5.2"
 # Front-end & Assets
 gem 'bcrypt', "3.1.13"
 gem "bootstrap-sass", "3.4.1"
-gem "sassc", "~> 2.4"               # cần cho bootstrap-sass
-gem "autoprefixer-rails"            # cần để compile CSS mượt hơn
-gem "execjs"                        # cho JS runtime khi compile assets
-gem "sprockets-rails"               # asset pipeline
-gem "sprockets", "~> 4.2"           # đảm bảo tương thích Rails 7
+gem "sassc", "~> 2.4"
+gem "autoprefixer-rails"
+gem "execjs"
+gem "sprockets-rails"
+gem "sprockets", "~> 4.2"
 
 # Database
-gem "sqlite3", ">= 1.4"
+group :development, :test do
+  gem "sqlite3", ">= 1.4"
+end
+
+group :production do
+  gem "pg", "~> 1.5", ">= 1.5.7"
+end
 
 # Server
 gem "puma", ">= 5.0"
