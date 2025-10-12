@@ -26,7 +26,7 @@ Rails.application.configure do
   # Active Storage
   # ----------------------------
   # Store uploaded files (local for testing, S3 recommended in real production)
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
   # For S3, uncomment below and configure config/storage.yml
   # config.active_storage.service = :amazon
 
