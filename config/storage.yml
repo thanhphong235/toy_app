@@ -1,8 +1,16 @@
+# config/storage.yml
+
+# Lưu file trên máy tính khi phát triển
 local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-# Ví dụ nếu muốn dùng Amazon S3
+# Lưu file khi chạy test
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+# Lưu file lên Amazon S3 (production)
 amazon:
   service: S3
   access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
