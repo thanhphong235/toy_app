@@ -5,17 +5,30 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/rails_default' %>
     <%= render 'layouts/shim' %>
+
+    <!-- Add Stimulus/JS -->
+    <%= javascript_importmap_tags %>
+
+    <!-- Load jQuery & Bootstrap 3 JS for dropdowns -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Load Bootstrap 3 CSS if chưa load -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 
 <body>
     <%= render 'layouts/header' %>
     <div class="container">
         <% flash.each do |message_type, message| %>
-        <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
         <% end %>
+
         <%= yield %>
         <%= render 'layouts/footer' %>
+
         <%= debug(params) if Rails.env.development? %>
     </div>
 </body>
+
+</html>
