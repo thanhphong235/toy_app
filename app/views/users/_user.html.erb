@@ -1,12 +1,10 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
+<li class="user-item">
+    <%= gravatar_for user, size: 50 %>
+    <%= link_to user.name, user, class: "user-name" %>
 
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
-
-</div>
+    <% if current_user&.admin? && !current_user?(user) %>
+    | <%= link_to "delete", user, 
+                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+                  class: "delete-link text-red-600 hover:text-red-800" %>
+    <% end %>
+</li>

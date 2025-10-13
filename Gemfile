@@ -13,6 +13,9 @@ gem "autoprefixer-rails"
 gem "execjs"
 gem "sprockets-rails"
 gem "sprockets", "~> 4.2"
+gem "faker", "2.1.2"
+gem "will_paginate", "~> 3.3.1"
+gem "bootstrap-will_paginate", "1.0.0"
 
 # Database
 group :development, :test do
