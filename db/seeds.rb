@@ -13,16 +13,15 @@ require 'faker'
 User.delete_all if Rails.env.development? || Rails.env.test?
 Faker::UniqueGenerator.clear
 
-# Tạo admin
-User.create!(
-  name: "Example Admin",
-  email: "admin@example.com",
-  password: "foobar",
-  password_confirmation: "foobar",
-  admin: true,
-  activated: true,
-  activated_at: Time.zone.now
-)
+# Tạo admin luôn với password cố định
+admin = User.find_or_initialize_by(email: "admin@example.com")
+admin.name = "Example Admin"
+admin.password = "newpassword"            # mật khẩu bạn muốn dùng để login
+admin.password_confirmation = "newpassword"
+admin.admin = true
+admin.activated = true
+admin.activated_at = Time.zone.now
+admin.save!
 
 # Tạo 99 user ngẫu nhiên
 99.times do

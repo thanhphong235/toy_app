@@ -1,28 +1,23 @@
+# config/routes.rb
 Rails.application.routes.draw do
   get 'sessions/new'
   resources :microposts
   resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :account_activations, only: [:edit]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  root 'static_pages#home'
+  get '/help', to: 'static_pages#help'
+  get '/about', to: 'static_pages#about'
+  get '/contact', to: 'static_pages#contact'
+  get '/signup', to: 'users#new'
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-  # root 'users#index'
-  # root 'application#hello'
-  # root 'static_pages#home'
-  # get '/help', to: 'static_pages#help'
-  # get '/about', to: 'static_pages#about'
-root 'static_pages#home'
-get '/help', to: 'static_pages#help'
-get '/about', to: 'static_pages#about'
-get '/contact', to: 'static_pages#contact'
-get '/signup', to: 'users#new'
-get '/login', to: 'sessions#new'
-post '/login', to: 'sessions#create'
-delete '/logout', to: 'sessions#destroy'
-resources :users
-resources :account_activations, only: [:edit]
+  # -------------------------
+  # TEMP ADMIN CREATION (PRODUCTION FREE TIER)
+  # -------------------------
+  if Rails.env.production?
+    get '/create_admin', to: 'admin_setup#create_admin'
+  end
 end
