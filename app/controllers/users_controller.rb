@@ -7,12 +7,15 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.paginate(page: params[:page], per_page: 10)
+  #  @users = User.where(activated: FILL_IN).paginate(page: params[:page], per_page: 10)
+  @users = User.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /users/:id
   def show
     @user = User.find(params[:id])
+    # redirect_to root_url and return unless FILL_IN
+    redirect_to root_url and return unless @user.activated?
   end
 
   # GET /signup
@@ -29,9 +32,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new', status: :unprocessable_entity
     end

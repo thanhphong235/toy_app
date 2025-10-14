@@ -4,36 +4,28 @@ Rails.application.configure do
   # ----------------------------
   # Code loading
   # ----------------------------
-  # Cache classes and eager load code for better performance
   config.cache_classes = true
   config.eager_load = true
-
-  # Full error reports are disabled and caching is enabled
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # ----------------------------
   # Static files & assets
   # ----------------------------
-  # Enable Rails to serve static files if environment variable is set (needed if no NGINX/Apache)
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-
-  # Do not compile assets on the fly in production
   config.assets.compile = false
-  # config.assets.css_compressor = :sass  # uncomment if you want CSS compression
+  # config.assets.css_compressor = :sass
 
   # ----------------------------
   # Active Storage
   # ----------------------------
-  # Store uploaded files (local for testing, S3 recommended in real production)
+  # Nếu dùng S3, config ở storage.yml và uncomment dòng dưới
   config.active_storage.service = :local
-  # For S3, uncomment below and configure config/storage.yml
   # config.active_storage.service = :amazon
 
   # ----------------------------
   # SSL
   # ----------------------------
-  # Force all access over SSL and use secure cookies
   config.force_ssl = true
 
   # ----------------------------
@@ -49,27 +41,29 @@ Rails.application.configure do
   # ----------------------------
   # Cache & Job
   # ----------------------------
-  # Use different cache store if needed
   # config.cache_store = :mem_cache_store
-
-  # Active Job queue adapter
   # config.active_job.queue_adapter = :resque
   # config.active_job.queue_name_prefix = "hello_app_2_production"
 
   # ----------------------------
-  # Mailer
+  # Mailer (SendGrid trên Render)
   # ----------------------------
   config.action_mailer.perform_caching = false
-  # config.action_mailer.default_url_options = { host: 'yourdomain.com', protocol: 'https' }
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.example.com',
-  #   port: 587,
-  #   user_name: ENV['SMTP_USERNAME'],
-  #   password: ENV['SMTP_PASSWORD'],
-  #   authentication: 'plain',
-  #   enable_starttls_auto: true
-  # }
+  config.action_mailer.raise_delivery_errors = true
+config.action_mailer.delivery_method = :smtp
+
+render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
+config.action_mailer.default_url_options = { host: render_app_domain, protocol: 'https' }
+
+config.action_mailer.smtp_settings = {
+  address: 'smtp.sendgrid.net',
+  port: 587,
+  domain: render_app_domain,
+  user_name: ENV['SENDGRID_USERNAME'],
+  password: ENV['SENDGRID_PASSWORD'],
+  authentication: :plain,
+  enable_starttls_auto: true
+}
 
   # ----------------------------
   # Internationalization
@@ -85,5 +79,5 @@ Rails.application.configure do
   # ----------------------------
   # Security (optional hosts)
   # ----------------------------
-  # config.hosts << "yourdomain.com"
+  config.hosts << render_app_domain
 end
