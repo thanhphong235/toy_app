@@ -6,22 +6,22 @@ Rails.application.configure do
   # ----------------------------
   config.cache_classes = true
   config.eager_load = true
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # ----------------------------
   # Static files & assets
   # ----------------------------
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = true  # để Render serve static files
   config.assets.compile = false
   # config.assets.css_compressor = :sass
-  # config.assets.js_compressor = :uglifier # nếu cần JS compress
+  # config.assets.js_compressor = :uglifier
 
   # ----------------------------
   # Active Storage
   # ----------------------------
   config.active_storage.service = :local
-  # config.active_storage.service = :amazon # nếu dùng S3
+  # config.active_storage.service = :amazon
 
   # ----------------------------
   # SSL
@@ -43,7 +43,7 @@ Rails.application.configure do
   # ----------------------------
   # config.cache_store = :mem_cache_store
   # config.active_job.queue_adapter = :async
-  # config.active_job.queue_name_prefix = "your_app_production"
+  # config.active_job.queue_name_prefix = "toy_app_production"
 
   # ----------------------------
   # Mailer (SendGrid)
@@ -79,5 +79,8 @@ Rails.application.configure do
   # ----------------------------
   # Security (hosts)
   # ----------------------------
-  config.hosts << render_app_domain
+  # Cho phép tất cả host tạm thời để Render chạy được
+  config.hosts.clear
+  # Nếu muốn an toàn hơn, chỉ thêm host Render:
+  # config.hosts << render_app_domain
 end
