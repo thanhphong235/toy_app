@@ -16,8 +16,8 @@ Faker::UniqueGenerator.clear
 # Tạo admin luôn với password cố định
 admin = User.find_or_initialize_by(email: "admin@example.com")
 admin.name = "Example Admin"
-admin.password = "phong123"            # mật khẩu bạn muốn dùng để login
-admin.password_confirmation = "phong123"
+admin.password = "newpassword"            # mật khẩu bạn muốn dùng để login
+admin.password_confirmation = "newpassword"
 admin.admin = true
 admin.activated = true
 admin.activated_at = Time.zone.now
