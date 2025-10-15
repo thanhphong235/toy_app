@@ -20,7 +20,7 @@ gem "bootstrap-will_paginate", "1.0.0"
 
 # Database
 group :development, :test do
-  gem "sqlite3", ">= 1.4"
+  gem "sqlite3", ">= 1.7"
 end
 
 group :production do

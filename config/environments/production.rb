@@ -12,7 +12,8 @@ Rails.application.configure do
   # ----------------------------
   # Static files & assets
   # ----------------------------
-  config.public_file_server.enabled = true  # để Render serve static files
+  # Cho phép Render serve static files
+  config.public_file_server.enabled = true
   config.assets.compile = false
   # config.assets.css_compressor = :sass
   # config.assets.js_compressor = :uglifier
@@ -52,15 +53,17 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
 
+  # Dùng domain Render thật (ví dụ: https://toy-app-4-yajg.onrender.com)
   render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
   config.action_mailer.default_url_options = { host: render_app_domain, protocol: 'https' }
 
+  # Cấu hình SMTP SendGrid
   config.action_mailer.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: 587,
-    domain: render_app_domain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
+    domain: 'render.com', # domain của nhà cung cấp, không phải app domain
+    user_name: 'apikey', # LUÔN là chữ 'apikey' literal
+    password: ENV['SENDGRID_API_KEY'], # đổi sang biến SENDGRID_API_KEY để dễ hiểu
     authentication: :plain,
     enable_starttls_auto: true
   }
@@ -79,8 +82,6 @@ Rails.application.configure do
   # ----------------------------
   # Security (hosts)
   # ----------------------------
-  # Cho phép tất cả host tạm thời để Render chạy được
+  # Cho phép tất cả host (Render tự cấp domain)
   config.hosts.clear
-  # Nếu muốn an toàn hơn, chỉ thêm host Render:
-  # config.hosts << render_app_domain
 end
