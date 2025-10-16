@@ -17,6 +17,9 @@ module HelloApp2
     config.autoload_lib(ignore: %w(assets tasks))
     config.active_storage.analyzers = []
 
+    # Include the authenticity token in remote forms.
+    config.action_view.embed_authenticity_token_in_remote_forms = true
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
