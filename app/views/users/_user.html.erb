@@ -3,8 +3,8 @@
     <%= link_to user.name, user, class: "user-name" %>
 
     <% if current_user&.admin? && !current_user?(user) %>
-    | <%= link_to "delete", user, 
-                  data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
-                  class: "delete-link text-red-600 hover:text-red-800" %>
+    | <%= button_to "Delete", user, method: :delete,
+          data: { turbo_confirm: "Are you sure?" },
+          class: "btn btn-link text-danger p-0 ms-2" %>
     <% end %>
 </li>

@@ -26,8 +26,8 @@
                 Posted <%= time_ago_in_words(micropost.created_at) %> ago.
                 <% if current_user?(micropost.user) %>
                 <%= button_to "delete", micropost, method: :delete,
-                data: { turbo_confirm: "Are you sure?" },
-                class: "btn btn-link text-danger p-0 ms-2" %>
+                                        data: { turbo_confirm: "Are you sure?" },
+                                        class: "btn btn-link text-danger p-0 ms-2" %>
                 <% end %>
             </small>
         </div>
