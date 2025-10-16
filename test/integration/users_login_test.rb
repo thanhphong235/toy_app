@@ -5,6 +5,13 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
   end
 
+  # Helper cho integration test
+  def log_in_as(user, password: 'password', remember_me: '1')
+    post login_path, params: { session: { email: user.email,
+                                          password: password,
+                                          remember_me: remember_me } }
+  end
+
   test "login with valid email/invalid password" do
     get login_path
     assert_template 'sessions/new'
@@ -18,9 +25,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test "login with valid information followed by logout" do
-    get login_path
-    post login_path, params: { session: { email: @user.email,
-                                          password: 'password' } }
+    log_in_as(@user)
     assert is_logged_in?
     assert_redirected_to @user
     follow_redirect!
@@ -32,7 +37,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     delete logout_path
     assert_not is_logged_in?
     assert_redirected_to root_url
-    # Mô phỏng người dùng logout ở tab thứ hai
+    # Simulate logout in second window
     delete logout_path
     follow_redirect!
     assert_select "a[href=?]", login_path
@@ -42,14 +47,11 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   test "login with remembering" do
     log_in_as(@user, remember_me: '1')
-    # Kiểm tra cookie remember_token đã được lưu
     assert_not_empty cookies[:remember_token]
   end
 
   test "login without remembering" do
-    # Đăng nhập để thiết lập cookie
     log_in_as(@user, remember_me: '1')
-    # Đăng nhập lại và đảm bảo cookie bị xóa
     log_in_as(@user, remember_me: '0')
     assert_empty cookies[:remember_token]
   end
