@@ -1,19 +1,35 @@
-<li id="micropost-<%= micropost.id %>">
-    <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-    <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-    <span class="content">
-        <%= micropost.content %>
-        <% if micropost.image.attached? %>
-        <%= image_tag micropost.display_image, class: "img-fluid mt-2" %>
+<li id="micropost-<%= micropost.id %>" class="mb-3">
+    <!-- Avatar người dùng -->
+    <div class="d-flex align-items-start">
+        <%= link_to micropost.user do %>
+        <%= gravatar_for(micropost.user, size: 50) %>
         <% end %>
 
-    </span>
-    <span class="timestamp">
-        Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-        <% if current_user?(micropost.user) %>
-        <%= button_to "delete", micropost, method: :delete,
-                             data: { turbo_confirm: "You sure?" },
-                             class: "btn btn-link text-danger p-0" %>
-        <% end %>
-    </span>
+        <div class="ms-2 flex-grow-1">
+            <!-- Tên người dùng -->
+            <strong>
+                <%= link_to micropost.user.name, micropost.user %>
+            </strong>
+
+            <!-- Nội dung micropost -->
+            <p class="mb-1">
+                <%= micropost.content %>
+            </p>
+
+            <!-- Hiển thị ảnh nếu có -->
+            <% if micropost.image.attached? %>
+            <%= image_tag micropost.image.variant(resize_to_limit: [500, 500]), class: "img-fluid rounded mb-1" %>
+            <% end %>
+
+            <!-- Thời gian đăng và nút xóa -->
+            <small class="text-muted">
+                Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+                <% if current_user?(micropost.user) %>
+                <%= button_to "delete", micropost, method: :delete,
+                data: { turbo_confirm: "Are you sure?" },
+                class: "btn btn-link text-danger p-0 ms-2" %>
+                <% end %>
+            </small>
+        </div>
+    </div>
 </li>

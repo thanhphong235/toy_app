@@ -17,7 +17,8 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'  # Check pagination exists
 
     # Check each user on first page
-    first_page_of_users = User.paginate(page: 1)
+    first_page_of_users = User.where(activated: true).paginate(page: 1)
+
     first_page_of_users.each do |user|
       # Check user name link exists
       assert_select 'a[href=?]', user_path(user), text: user.name

@@ -2,12 +2,10 @@
 
 <h1>All users</h1>
 
-<!-- Pagination top -->
-<%= will_paginate @users, class: "pagination-top" %>
+<%= will_paginate @users %>
 
 <ul class="users">
     <%= render @users %>
 </ul>
 
-<!-- Pagination bottom -->
-<%= will_paginate @users, class: "pagination-bottom" %>
+<%= will_paginate @users %>
