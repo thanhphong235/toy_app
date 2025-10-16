@@ -21,6 +21,8 @@ gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"
 gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
+gem "letter_opener", group: :development
+
 
 
 # Dùng mini_racer làm JS runtime thay vì Bun/Node
