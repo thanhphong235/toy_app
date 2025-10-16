@@ -1,23 +1,27 @@
 class UserMailer < ApplicationMailer
+  default from: 'noreply@yourdomain.com' # đổi sang email domain thật
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.account_activation.subject
-  #
+  # ----------------------------
+  # Account Activation Email
+  # ----------------------------
   def account_activation(user)
     @user = user
+    @activation_url = edit_account_activation_url(@user.activation_token, email: @user.email)
 
-    mail to: user.email, subject: "Account activation"
+    mail to: @user.email, subject: "Activate your account"
+  rescue Net::OpenTimeout, Net::SMTPFatalError, Net::SMTPAuthenticationError => e
+    Rails.logger.error "[Email Error] Failed to send activation email to #{@user.email}: #{e.message}"
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.password_reset.subject
-  #
+  # ----------------------------
+  # Password Reset Email
+  # ----------------------------
   def password_reset(user)
     @user = user
-    mail to: user.email, subject: "Password reset"
+    @reset_url = edit_password_reset_url(@user.reset_token, email: @user.email)
+
+    mail to: @user.email, subject: "Reset your password"
+  rescue Net::OpenTimeout, Net::SMTPFatalError, Net::SMTPAuthenticationError => e
+    Rails.logger.error "[Email Error] Failed to send password reset email to #{@user.email}: #{e.message}"
   end
 end

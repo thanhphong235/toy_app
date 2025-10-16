@@ -12,17 +12,13 @@ Rails.application.configure do
   # ----------------------------
   # Static files & assets
   # ----------------------------
-  # Cho phép Render serve static files
   config.public_file_server.enabled = true
   config.assets.compile = false
-  # config.assets.css_compressor = :sass
-  # config.assets.js_compressor = :uglifier
 
   # ----------------------------
   # Active Storage
   # ----------------------------
   config.active_storage.service = :cloudinary
-  # config.active_storage.service = :amazon
 
   # ----------------------------
   # SSL
@@ -40,32 +36,25 @@ Rails.application.configure do
   config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   # ----------------------------
-  # Cache & Job
-  # ----------------------------
-  # config.cache_store = :mem_cache_store
-  # config.active_job.queue_adapter = :async
-  # config.active_job.queue_name_prefix = "toy_app_production"
-
-  # ----------------------------
   # Mailer (SendGrid)
   # ----------------------------
   config.action_mailer.perform_caching = false
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
 
-  # Dùng domain Render thật (ví dụ: https://toy-app-4-yajg.onrender.com)
   render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
   config.action_mailer.default_url_options = { host: render_app_domain, protocol: 'https' }
 
-  # Cấu hình SMTP SendGrid
   config.action_mailer.smtp_settings = {
     address: 'smtp.sendgrid.net',
     port: 587,
-    domain: 'render.com', # domain của nhà cung cấp, không phải app domain
-    user_name: 'apikey', # LUÔN là chữ 'apikey' literal
-    password: ENV['SENDGRID_API_KEY'], # đổi sang biến SENDGRID_API_KEY để dễ hiểu
+    domain: 'render.com',
+    user_name: 'apikey',
+    password: ENV['SENDGRID_API_KEY'],
     authentication: :plain,
-    enable_starttls_auto: true
+    enable_starttls_auto: true,
+    open_timeout: 5,
+    read_timeout: 5
   }
 
   # ----------------------------
@@ -82,6 +71,5 @@ Rails.application.configure do
   # ----------------------------
   # Security (hosts)
   # ----------------------------
-  # Cho phép tất cả host (Render tự cấp domain)
   config.hosts.clear
 end
