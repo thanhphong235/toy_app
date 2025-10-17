@@ -13,9 +13,10 @@ Rails.application.configure do
   # ----------------------------
   # Static files & assets
   # ----------------------------
+  # Render yêu cầu biến môi trường RAILS_SERVE_STATIC_FILES=true để phục vụ assets
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.assets.compile = false
-  config.assets.digest  = true
+  config.assets.compile  = false  # assets đã precompile trước khi deploy
+  config.assets.digest   = true
 
   # ----------------------------
   # Active Storage (Cloudinary)
@@ -44,17 +45,17 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
 
-  # Host domain (Render)
+  # Domain app trên Render
   render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
   config.action_mailer.default_url_options = { host: render_app_domain, protocol: 'https' }
 
-  # SendGrid SMTP settings
+  # Cấu hình SMTP SendGrid
   config.action_mailer.smtp_settings = {
     address:              'smtp.sendgrid.net',
     port:                 587,
-    domain:               render_app_domain,
-    user_name:            'apikey',                 # luôn là 'apikey' khi dùng SendGrid API key
-    password:             ENV['SENDGRID_API_KEY'],  # đặt biến môi trường SENDGRID_API_KEY
+    domain:               render_app_domain,       # domain app
+    user_name:            'apikey',                # luôn là 'apikey' khi dùng SendGrid API key
+    password:             ENV['SENDGRID_API_KEY'], # phải set biến môi trường SENDGRID_API_KEY trên Render
     authentication:       :plain,
     enable_starttls_auto: true,
     open_timeout:         15,
@@ -67,7 +68,7 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # ----------------------------
-  # Deprecation & Schema
+  # Deprecations & Schema
   # ----------------------------
   config.active_support.report_deprecations = false
   config.active_record.dump_schema_after_migration = false
@@ -75,6 +76,7 @@ Rails.application.configure do
   # ----------------------------
   # Security - Hosts
   # ----------------------------
+  # Chỉ cho phép domain app trên Render
   config.hosts.clear
   config.hosts << render_app_domain
 end
