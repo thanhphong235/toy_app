@@ -7,16 +7,15 @@ Rails.application.configure do
   # ----------------------------
   config.cache_classes = true
   config.eager_load = true
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # ----------------------------
   # Static files & assets
   # ----------------------------
-  # Render yêu cầu biến môi trường RAILS_SERVE_STATIC_FILES=true để phục vụ assets
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
-  config.assets.compile  = false  # assets đã precompile trước khi deploy
-  config.assets.digest   = true
+  config.assets.compile = false # Precompile trước khi deploy
+  config.assets.digest = true
 
   # ----------------------------
   # Active Storage (Cloudinary)
@@ -37,27 +36,29 @@ Rails.application.configure do
   logger = ActiveSupport::Logger.new($stdout)
   logger.formatter = ::Logger::Formatter.new
   config.logger = ActiveSupport::TaggedLogging.new(logger)
-  config.log_to = %w[stdout]  # Giúp log hiển thị trên Render console
+  config.log_to = %w[stdout]
 
   # ----------------------------
   # Mailer (SendGrid)
   # ----------------------------
   render_app_domain = ENV["RENDER_EXTERNAL_URL"] || "https://toy-app-4-yajg.onrender.com"
+
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: render_app_domain, protocol: "https" }
+  config.action_mailer.default_url_options = {
+    host: render_app_domain,
+    protocol: "https"
+  }
 
   config.action_mailer.smtp_settings = {
     address:              "smtp.sendgrid.net",
     port:                 587,
     domain:               render_app_domain,
-    user_name:            "apikey",                 # luôn là 'apikey' khi dùng SendGrid API key
-    password:             ENV["SENDGRID_API_KEY"],  # phải set SENDGRID_API_KEY trong Render
+    user_name:            "apikey",                # luôn là 'apikey' khi dùng SendGrid API key
+    password:             ENV["SENDGRID_API_KEY"], # phải set trong Render Dashboard
     authentication:       :plain,
-    enable_starttls_auto: true,
-    open_timeout:         15,
-    read_timeout:         15
+    enable_starttls_auto: true
   }
 
   # ----------------------------
@@ -74,14 +75,12 @@ Rails.application.configure do
   # ----------------------------
   # Security - Hosts
   # ----------------------------
-  # Cho phép domain app chính và toàn bộ subdomain .onrender.com
   config.hosts.clear
   config.hosts << "toy-app-4-yajg.onrender.com"
-  config.hosts << ".onrender.com" # fix lỗi Blocked hosts trên Render
+  config.hosts << ".onrender.com" # Cho phép tất cả subdomain của Render
 
   # ----------------------------
-  # Additional optional settings
+  # Optional - tránh lỗi redirect loop khi proxy
   # ----------------------------
-  # Nếu gặp loop redirect SSL khi dùng proxy, có thể thêm:
   # config.ssl_options = { redirect: { exclude: -> request { request.path =~ /healthcheck/ } } }
 end
