@@ -14,7 +14,7 @@ Rails.application.configure do
   # Static files & assets
   # ----------------------------
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
-  config.assets.compile = false # Precompile trước khi deploy
+  config.assets.compile = false  # Precompile trước khi deploy
   config.assets.digest = true
 
   # ----------------------------
@@ -39,26 +39,16 @@ Rails.application.configure do
   config.log_to = %w[stdout]
 
   # ----------------------------
-  # Mailer (SendGrid)
+  # Mailer (Letter Opener Web for Render testing)
   # ----------------------------
   render_app_domain = ENV["RENDER_EXTERNAL_URL"] || "https://toy-app-4-yajg.onrender.com"
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.default_url_options = {
     host: render_app_domain,
     protocol: "https"
-  }
-
-  config.action_mailer.smtp_settings = {
-    address:              "smtp.sendgrid.net",
-    port:                 587,
-    domain:               render_app_domain,
-    user_name:            "apikey",                # luôn là 'apikey' khi dùng SendGrid API key
-    password:             ENV["SENDGRID_API_KEY"], # phải set trong Render Dashboard
-    authentication:       :plain,
-    enable_starttls_auto: true
   }
 
   # ----------------------------
