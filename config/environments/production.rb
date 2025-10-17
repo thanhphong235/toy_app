@@ -34,28 +34,25 @@ Rails.application.configure do
   config.log_level = :info
   config.log_tags  = [:request_id]
 
-  logger = ActiveSupport::Logger.new(STDOUT)
+  logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = ::Logger::Formatter.new
-  config.logger = ActiveSupport::TaggedLogging.new(logger)
+  config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
   # ----------------------------
   # Mailer (SendGrid)
   # ----------------------------
+  render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
-
-  # Domain app trên Render
-  render_app_domain = ENV['RENDER_EXTERNAL_URL'] || 'toy-app-4-yajg.onrender.com'
   config.action_mailer.default_url_options = { host: render_app_domain, protocol: 'https' }
 
-  # Cấu hình SMTP SendGrid
   config.action_mailer.smtp_settings = {
     address:              'smtp.sendgrid.net',
     port:                 587,
-    domain:               render_app_domain,       # domain app
-    user_name:            'apikey',                # luôn là 'apikey' khi dùng SendGrid API key
-    password:             ENV['SENDGRID_API_KEY'], # phải set biến môi trường SENDGRID_API_KEY trên Render
+    domain:               render_app_domain,
+    user_name:            'apikey',                 # luôn là 'apikey' khi dùng SendGrid API key
+    password:             ENV['SENDGRID_API_KEY'],  # set biến môi trường SENDGRID_API_KEY trên Render
     authentication:       :plain,
     enable_starttls_auto: true,
     open_timeout:         15,
@@ -76,7 +73,14 @@ Rails.application.configure do
   # ----------------------------
   # Security - Hosts
   # ----------------------------
-  # Chỉ cho phép domain app trên Render
+  # Chỉ cho phép domain app trên Render để tránh lỗi Blocked hosts
   config.hosts.clear
   config.hosts << render_app_domain
+  config.hosts << "www.#{render_app_domain}" # nếu cần
+
+  # ----------------------------
+  # Additional optional settings
+  # ----------------------------
+  # Nếu gặp loop redirect SSL khi dùng proxy, có thể thêm:
+  # config.ssl_options = { redirect: { exclude: -> request { request.path =~ /healthcheck/ } } }
 end
