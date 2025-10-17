@@ -22,6 +22,8 @@ gem "mini_magick", "4.9.5"
 gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
 gem "letter_opener", group: :development
+gem 'sendgrid-ruby'
+
 
 
 
