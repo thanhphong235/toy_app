@@ -45,11 +45,11 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.default_url_options = {
     host: render_app_domain,
     protocol: "https"
-    # https://toy-app-4-yajg.onrender.com/letter_opener(kiem tra mail tren trinh duyet)
   }
 
   # ----------------------------
@@ -69,9 +69,4 @@ Rails.application.configure do
   config.hosts.clear
   config.hosts << "toy-app-4-yajg.onrender.com"
   config.hosts << ".onrender.com" # Cho phép tất cả subdomain của Render
-
-  # ----------------------------
-  # Optional - tránh lỗi redirect loop khi proxy
-  # ----------------------------
-  # config.ssl_options = { redirect: { exclude: -> request { request.path =~ /healthcheck/ } } }
 end

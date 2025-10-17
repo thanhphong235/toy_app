@@ -21,14 +21,17 @@ gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"
 gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
-gem "letter_opener", group: :development
-gem 'sendgrid-ruby'
-gem 'letter_opener_web'
 
+# ----------------------------
+# Email (cho phép dùng cả ở Render)
+# ----------------------------
+gem "letter_opener"
+gem "letter_opener_web"
+gem "sendgrid-ruby"
 
-
-
-# Dùng mini_racer làm JS runtime thay vì Bun/Node
+# ----------------------------
+# JS runtime
+# ----------------------------
 gem "mini_racer", platforms: :ruby
 
 # ----------------------------
