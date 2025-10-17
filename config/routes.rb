@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   if Rails.env.production?
     get '/create_admin', to: 'admin_setup#create_admin'
   end
-  if Rails.env.development?
+  if Rails.env.development? || Rails.env.production?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 end

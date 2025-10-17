@@ -49,6 +49,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {
     host: render_app_domain,
     protocol: "https"
+    # https://toy-app-4-yajg.onrender.com/letter_opener(kiem tra mail tren trinh duyet)
   }
 
   # ----------------------------
