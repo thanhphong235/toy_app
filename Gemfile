@@ -23,6 +23,7 @@ gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
 gem "letter_opener", group: :development
 gem 'sendgrid-ruby'
+gem 'letter_opener_web'
 
 
 

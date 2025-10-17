@@ -1,8 +1,7 @@
 module MicropostsHelper
-    # Trả về variant đã resize của ảnh Micropost
-  def display_image(micropost, width: 500, height: 500)
-    return unless micropost.image.attached?
-
-    micropost.image.variant(resize_to_limit: [width, height])
+  def display_image(micropost)
+    if micropost.image.attached?
+      micropost.image.variant(resize_to_limit: [500, 500])
+    end
   end
 end
