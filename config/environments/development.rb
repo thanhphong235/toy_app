@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # -----------------------------
-  # Reload code on every request
+  # Code Reloading
   # -----------------------------
   config.enable_reloading = true
   config.eager_load = false
@@ -38,19 +38,22 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # -----------------------------
-  # Action Mailer - MAIL GIẢ
+  # Action Mailer – Gửi Gmail thật
   # -----------------------------
-  # 1) Dùng Letter Opener (mở email trong trình duyệt)
-  # gem "letter_opener", group: :development
-  config.action_mailer.delivery_method = :smtp #khi deploy len render thi dung smtp, khi test local thi dung letter_opener
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  # Hoặc 2) Dùng :test (lưu email trong ActionMailer::Base.deliveries array)
-  # config.action_mailer.delivery_method = :test
-
-  config.action_mailer.perform_caching = false
+  config.action_mailer.smtp_settings = {
+    address:              "smtp.gmail.com",
+    port:                 587,
+    domain:               "gmail.com",
+    user_name:            "tu1den19@gmail.com",      # 👉 Gmail thật của bạn
+    password:             "emppwrkouvidszcy",        # 👉 mật khẩu ứng dụng (16 ký tự, không có khoảng trắng)
+    authentication:       "plain",
+    enable_starttls_auto: true
+  }
 
   # -----------------------------
   # Deprecation & Migration

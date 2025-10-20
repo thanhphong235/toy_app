@@ -21,6 +21,7 @@ gem "image_processing", "1.12"
 gem "mini_magick", "4.9.5"
 gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
+gem "dotenv-rails"
 
 # ----------------------------
 # Email (cho phép dùng cả ở Render)
