@@ -1,5 +1,5 @@
 require 'test_helper'
-
+include ActionDispatch::TestProcess
 class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
@@ -20,7 +20,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
 
     # Valid submission
     content = "This micropost really ties the room together"
-    image = Rack::Test::UploadedFile.new('test/fixtures/kitten.jpg', 'image/jpeg')
+    image = fixture_file_upload('test/fixtures/kitten.jpg', 'image/jpeg')
     assert_difference 'Micropost.count', 1 do
       post microposts_path, params: { micropost: { content: content, image: image } }
     end
