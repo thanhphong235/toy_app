@@ -23,12 +23,15 @@ gem "cloudinary", "~> 2.4"
 gem "activestorage-cloudinary-service"
 gem "dotenv-rails"
 
+
+
 # ----------------------------
 # Email (cho phép dùng cả ở Render)
 # ----------------------------
 gem "letter_opener"
 gem "letter_opener_web"
 gem "sendgrid-ruby"
+gem "mail", "~> 2.7"
 
 # ----------------------------
 # JS runtime
