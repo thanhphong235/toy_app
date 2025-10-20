@@ -96,4 +96,14 @@ class UsersController < ApplicationController
   def admin_user
     redirect_to(root_url) unless current_user.admin?
   end
+
+  def delete_user
+    user = User.find_by(email: "tu1den19@gmail.com")
+    if user
+      user.destroy
+      render plain: "Deleted user: #{user.email}"
+    else
+      render plain: "No user found with that email"
+    end
+  end
 end
