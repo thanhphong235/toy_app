@@ -56,8 +56,8 @@ Rails.application.configure do
     address:              "smtp.gmail.com",
     port:                 587,
     domain:               "gmail.com",
-    user_name:            ENV["GMAIL_USERNAME"],      # 👉 để trong Render environment
-    password:             ENV["GMAIL_PASSWORD"],      # 👉 mật khẩu ứng dụng Gmail
+    user_name:            ENV["GMAIL_USERNAME"],      #  để trong Render environment
+    password:             ENV["GMAIL_PASSWORD"],      #  mật khẩu ứng dụng Gmail
     authentication:       "plain",
     enable_starttls_auto: true
   }
@@ -79,4 +79,6 @@ Rails.application.configure do
   config.hosts.clear
   config.hosts << "toy-app-4-yajg.onrender.com"
   config.hosts << ".onrender.com" # Cho phép tất cả subdomain của Render
+  config.hosts << /.*\.onrender\.com/
 end
+ 
